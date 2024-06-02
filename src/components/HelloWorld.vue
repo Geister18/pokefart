@@ -116,12 +116,15 @@ export default {
 	methods: {
 		async serach_pokemon() {
 			const response = await fetch('https://tyradex.vercel.app/api/v1/pokemon/' + this.pokemon_name.toLowerCase());
-			if (response.pokedex_id) {
+			if (response.ok) {
 				const data = await response.json();
-				this.api_result = data;
+				if (data.pokedex_id) {
+					this.api_result = data;
+				} else {
+					alert('Pokemon not found!');
+				}
 			} else {
 				alert('Pokemon not found!');
-				this.api_result = false;
 			}
 		},
 		addPokemonToTeam() {
