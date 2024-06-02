@@ -6,7 +6,7 @@
 	</form>
 
 	<div class="text-center" v-if="api_result">
-		<!-- <div>Nom : {{ api_result.name.fr }}</div> -->
+		<div>{{ api_result.name.fr }} (id : {{ api_result.pokedex_id }})</div>
 		<div><img class="sprite" :src="api_result.sprites.regular" alt=""></div>
 		<div class="d-flex justify-content-center">
 			<div>
@@ -41,8 +41,7 @@
 
 	<h2>Personnal team</h2>
 	<div class="d-flex align-items-center text-center" style="gap: 20px; border: 1px solid #000; margin-bottom: 10px;" v-for="pokemon in personnal_team" :key="pokemon.pokedex_id">
-		<!-- <div>{{ pokemon.name.fr }}</div> -->
-		<div><img class="sprite" :src="pokemon.sprites.regular" alt=""></div>
+		<div>{{ pokemon.name.fr }}<br /><img class="sprite" :src="pokemon.sprites.regular" alt=""></div>
 		<div>
 			Types :
 			<div class="d-flex align-items-center justify-content-center" style="gap: 5px" v-for="apiType in pokemon.types" :key="apiType.name">
@@ -74,8 +73,7 @@
 
 	<h2>Targets</h2>
 	<div class="d-flex align-items-center text-center" style="gap: 20px; border: 1px solid #000; margin-bottom: 10px;" v-for="pokemon in targets" :key="pokemon.pokedex_id">
-		<!-- <div>{{ pokemon.name.fr }}</div> -->
-		<div><img class="sprite" :src="pokemon.sprites.regular" alt=""></div>
+		<div>{{ pokemon.name.fr }}<br /><img class="sprite" :src="pokemon.sprites.regular" alt=""></div>
 		<div>
 			Types :
 			<div class="d-flex align-items-center justify-content-center" style="gap: 5px" v-for="apiType in pokemon.types" :key="apiType.name">
@@ -118,7 +116,7 @@ export default {
 	methods: {
 		async serach_pokemon() {
 			const response = await fetch('https://tyradex.vercel.app/api/v1/pokemon/' + this.pokemon_name.toLowerCase());
-			if (response.ok) {
+			if (response.pokedex_id) {
 				const data = await response.json();
 				this.api_result = data;
 			} else {
