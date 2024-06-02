@@ -66,6 +66,18 @@
 				</div>
 			</div>
 		</div>
+
+		<div>
+			IV
+			<div class="ivs">
+				<div>PV : <input type="text" :value="pokemon.ivs.hp"></div>
+				<div>ATK : <input type="text" :value="pokemon.ivs.atk"></div>
+				<div>DEF : <input type="text" :value="pokemon.ivs.def"></div>
+				<div>ATKSPE : <input type="text" :value="pokemon.ivs.atk_spe"></div>
+				<div>DEFSPE : <input type="text" :value="pokemon.ivs.def_spe"></div>
+				<div>SPEED : <input type="text" :value="pokemon.ivs.speed"></div>
+			</div>
+		</div>
 		<button @click="removePokemonFromTeam(pokemon.pokedex_id)">X</button>
 	</div>
 
@@ -119,6 +131,14 @@ export default {
 			if (response.ok) {
 				const data = await response.json();
 				if (data.pokedex_id) {
+					data.ivs = {
+						hp: 0,
+						atk: 0,
+						def: 0,
+						atk_spe: 0,
+						def_spe: 0,
+						speed: 0
+					}
 					this.api_result = data;
 				} else {
 					alert('Pokemon not found!');

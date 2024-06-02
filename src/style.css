@@ -79,3 +79,13 @@ button:focus-visible {
 .sprite {
 	width: 80px;
 }
+
+.ivs {
+	display: grid;
+	grid-template-columns: 100px 100px 100px;
+	gap: 10px;
+}
+
+.ivs input {
+	width: 20px;
+}
