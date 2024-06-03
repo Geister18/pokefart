@@ -1,5 +1,14 @@
 <template>
 	<h1 class="text-center">POKEFART</h1>
+
+	<button @click="exportDatas">Exporter</button>
+	<div>{{ json_data }}</div>
+
+	<div class="d-flex" style="margin-top: 10px;">
+		<textarea type="text" v-model="json_data"></textarea>
+		<button @click="importDatas">Importer</button>
+	</div>
+
 	<form @submit.prevent="serach_pokemon" class="text-center">
 		<input v-model="pokemon_name">
 		<button type="submit">Rechercher</button>
@@ -70,12 +79,12 @@
 		<div>
 			IV
 			<div class="ivs">
-				<div>PV : <input type="text" :value="pokemon.ivs.hp"></div>
-				<div>ATK : <input type="text" :value="pokemon.ivs.atk"></div>
-				<div>DEF : <input type="text" :value="pokemon.ivs.def"></div>
-				<div>ATKSPE : <input type="text" :value="pokemon.ivs.atk_spe"></div>
-				<div>DEFSPE : <input type="text" :value="pokemon.ivs.def_spe"></div>
-				<div>SPEED : <input type="text" :value="pokemon.ivs.speed"></div>
+				<div>PV : <input type="text" v-model="pokemon.ivs.hp"></div>
+				<div>ATK : <input type="text" v-model="pokemon.ivs.atk"></div>
+				<div>DEF : <input type="text" v-model="pokemon.ivs.def"></div>
+				<div>ATKSPE : <input type="text" v-model="pokemon.ivs.atk_spe"></div>
+				<div>DEFSPE : <input type="text" v-model="pokemon.ivs.def_spe"></div>
+				<div>SPEED : <input type="text" v-model="pokemon.ivs.speed"></div>
 			</div>
 		</div>
 		<button @click="removePokemonFromTeam(pokemon.pokedex_id)">X</button>
@@ -122,7 +131,8 @@ export default {
 			pokemon_name: '',
 			personnal_team: [],
 			targets: [],
-			api_result: false
+			api_result: false,
+			json_data: ''
 		}
 	},
 	methods: {
@@ -166,6 +176,19 @@ export default {
 		},
 		removePokemonFromTarget(id) {
 			this.targets = this.targets.filter((pokemon) => pokemon.pokedex_id !== id);
+		},
+		exportDatas() {
+			//export data in json
+			const exportData = {
+				personnal_team: this.personnal_team,
+				targets: this.targets
+			}
+			this.json_data = JSON.stringify(exportData)
+		},
+		importDatas() {
+			const datas = JSON.parse(this.json_data);
+			this.personnal_team = datas.personnal_team;
+			this.targets = datas.targets;
 		}
 	}
 }
