@@ -189,6 +189,7 @@ export default {
 			const datas = JSON.parse(this.json_data);
 			this.personnal_team = datas.personnal_team;
 			this.targets = datas.targets;
+			this.json_data = '';
 		}
 	}
 }
