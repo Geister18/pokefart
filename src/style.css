@@ -78,12 +78,12 @@ button:focus-visible {
 }
 
 .sprite {
-	width: 80px;
+	width: 50px;
 }
 
 .ivs {
 	display: grid;
-	grid-template-columns: 100px 100px 100px;
+	grid-template-columns: 135px 135px 135px;
 	gap: 10px;
 }
 
