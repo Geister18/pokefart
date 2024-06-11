@@ -48,6 +48,7 @@
 				<div>DEF : {{ api_result.stats.def }}</div>
 				<div>ATK Spe : {{ api_result.stats.spe_atk }}</div>
 				<div>DEF Spe : {{ api_result.stats.spe_def }}</div>
+				<div>Speed : {{ api_result.stats.vit }}</div>
 			</div>
 		</div>
 		<button @click="addPokemonToTeam()">Ajouter à l'équipe</button>
