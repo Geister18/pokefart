@@ -14,6 +14,14 @@
 		<button type="submit">Rechercher</button>
 	</form>
 
+	<button @click="save">Sauvegarder</button>
+	<span id="saveConfirm" class="d-flex align-items-center">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+			<path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z" />
+		</svg>
+		Datas sauvegardées en local
+	</span>
+
 	<div class="text-center" v-if="api_result">
 		<div>{{ api_result.name.fr }} (id : {{ api_result.pokedex_id }})</div>
 		<div><img class="sprite" :src="api_result.sprites.regular" alt=""></div>
@@ -219,8 +227,50 @@ export default {
 			this.personnal_team = datas.personnal_team;
 			this.targets = datas.targets;
 			this.json_data = '';
+		},
+		save() {
+			//save to localstorage
+			localStorage.setItem('pokemon_team', JSON.stringify(this.personnal_team));
+			localStorage.setItem('pokemon_targets', JSON.stringify(this.targets));
+			const saveConfirm = document.getElementById('saveConfirm');
+			saveConfirm.style.display = 'flex';
+			setTimeout(() => {
+				saveConfirm.style.display = 'none';
+			}, 2000)
+		},
+		load() {
+			//load from localstorage
+			this.personnal_team = JSON.parse(localStorage.getItem('pokemon_team')) || [];
+			this.targets = JSON.parse(localStorage.getItem('pokemon_targets')) || [];
 		}
+	},
+	mounted() {
+		this.load();
+		//trigger save function on ctrl+s
+		window.addEventListener('keydown', (event) => {
+			event.preventDefault();
+			if (event.ctrlKey && event.key === 's') {
+				this.save();
+			}
+		})
+		//auto-save every 5 minutes
+		setInterval(() => {
+			this.save();
+		}, 300000)
 	}
 }
 </script>
-<style scoped></style>
+<style scoped>
+#saveConfirm {
+	display: none;
+	position: fixed;
+	top: 15px;
+	right: 15px;
+	z-index: 9999;
+	gap: 10px;
+	background-color: #2cb742;
+	padding: 0.6em 1.2em;
+	border-radius: 8px;
+	color: #fff;
+}
+</style>
