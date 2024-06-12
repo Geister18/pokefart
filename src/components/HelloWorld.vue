@@ -248,8 +248,8 @@ export default {
 		this.load();
 		//trigger save function on ctrl+s
 		window.addEventListener('keydown', (event) => {
-			event.preventDefault();
 			if (event.ctrlKey && event.key === 's') {
+				event.preventDefault();
 				this.save();
 			}
 		})
